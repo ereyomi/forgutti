@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{ box-sizing:border-box; }
+    html{ -webkit-text-size-adjust:100%; }
+    body{ margin:0; background:#0A0C12; color:#EDEFF4; font-family:'Space Grotesk',system-ui,-apple-system,sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; overflow-x:hidden; }
+    ::selection{ background:rgba(79,142,247,0.30); color:#fff; }
+    @keyframes fgPulse{ 0%,100%{ opacity:.5; transform:scale(1); } 50%{ opacity:1; transform:scale(1.35); } }
+    @keyframes fgDrop{ 0%{ transform:translateY(-2px); opacity:0; } 25%{ opacity:1; } 100%{ transform:translateY(24px); opacity:0; } }
+  </style>
+</helmet>
+<div ref="{{ rootRef }}" style="--accent:#4F8EF7; position:relative; min-height:100vh; background:#0A0C12; color:#EDEFF4;">
+
+  <div style="position:fixed; top:0; left:0; right:0; height:2px; z-index:120; pointer-events:none;">
+    <div ref="{{ progressRef }}" style="height:100%; width:0%; background:linear-gradient(90deg, color-mix(in srgb,var(--accent) 45%, transparent), var(--accent)); box-shadow:0 0 12px color-mix(in srgb,var(--accent) 70%, transparent);"></div>
+  </div>
+
+  <header ref="{{ navRef }}" style="position:fixed; top:0; left:0; right:0; z-index:110; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:15px clamp(18px,5vw,40px); border-bottom:1px solid transparent; transition:background .3s, border-color .3s, backdrop-filter .3s;">
+    <a href="#top" style="display:flex; align-items:center; gap:11px; text-decoration:none;">
+      <span style="display:grid; grid-template-columns:repeat(2,4px); grid-template-rows:repeat(2,4px); gap:3px;">
+        <span style="width:4px; height:4px; border-radius:50%; background:var(--accent);"></span>
+        <span style="width:4px; height:4px; border-radius:50%; background:color-mix(in srgb,var(--accent) 50%, transparent);"></span>
+        <span style="width:4px; height:4px; border-radius:50%; background:color-mix(in srgb,var(--accent) 50%, transparent);"></span>
+        <span style="width:4px; height:4px; border-radius:50%; background:var(--accent);"></span>
+      </span>
+      <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.06rem; letter-spacing:-0.01em; color:#EDEFF4;">Forgutti</span>
+    </a>
+    <a href="mailto:forgutti@gmail.com" style="display:inline-flex; align-items:center; gap:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:0.9rem; color:#0A0C12; background:var(--accent); padding:10px 18px; border-radius:8px; text-decoration:none; border:1px solid transparent; transition:transform .25s, box-shadow .25s, filter .25s;" style-hover="transform:translateY(-2px); box-shadow:0 10px 26px -10px color-mix(in srgb,var(--accent) 70%, transparent), 0 0 22px -6px color-mix(in srgb,var(--accent) 60%, transparent); filter:brightness(1.06);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">Work with me <span aria-hidden="true" style="font-size:0.9em;">↗</span></a>
+  </header>
+
+  <section id="top" data-screen-label="Hero" style="position:relative; min-height:100svh; display:flex; align-items:center; overflow:hidden; padding:120px clamp(18px,5vw,40px) 96px;">
+    <canvas ref="{{ canvasRef }}" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; display:block; z-index:0;"></canvas>
+    <div aria-hidden="true" style="position:absolute; inset:0; z-index:1; background:radial-gradient(120% 80% at 50% 0%, color-mix(in srgb,var(--accent) 10%, transparent) 0%, transparent 42%);"></div>
+    <div aria-hidden="true" style="position:absolute; inset:0; z-index:1; background:radial-gradient(100% 72% at 50% 44%, transparent 0%, rgba(10,12,18,0.35) 55%, #0A0C12 100%);"></div>
+    <div style="position:relative; z-index:2; max-width:1000px; margin:0 auto; width:100%; text-align:center;">
+      <div data-anim style="display:inline-flex; align-items:center; gap:10px; font-family:'JetBrains Mono',monospace; font-size:0.74rem; letter-spacing:0.22em; text-transform:uppercase; color:color-mix(in srgb,var(--accent) 90%, #ffffff); padding:7px 15px; border:1px solid color-mix(in srgb,var(--accent) 28%, transparent); border-radius:100px; background:color-mix(in srgb,var(--accent) 7%, transparent); margin-bottom:30px;">
+        <span style="width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent); animation:fgPulse 2.4s ease-in-out infinite;"></span>
+        AI systems · education · content
+      </div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(2.9rem,8.5vw,6.6rem); line-height:0.96; letter-spacing:-0.035em; margin:0 0 26px; color:#F3F5F9;">AI systems,<br>built <span style="color:var(--accent);">right.</span></h1>
+      <p style="max-width:630px; margin:0 auto 38px; font-size:clamp(1.02rem,1.4vw,1.2rem); line-height:1.6; color:#9AA3B4;">I design and ship production AI — RAG pipelines, Claude-powered assistants, the systems behind them — and teach teams to build it themselves. No buzzwords, just working software.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center;">
+        <a href="mailto:forgutti@gmail.com" style="display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1rem; color:#0A0C12; background:var(--accent); padding:15px 26px; border-radius:9px; text-decoration:none; border:1px solid transparent; transition:transform .25s, box-shadow .25s, filter .25s;" style-hover="transform:translateY(-2px); box-shadow:0 16px 34px -10px color-mix(in srgb,var(--accent) 65%, transparent), 0 0 30px -6px color-mix(in srgb,var(--accent) 60%, transparent); filter:brightness(1.06);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">Work with me <span aria-hidden="true">↗</span></a>
+        <a href="#products" style="display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:1rem; color:#EDEFF4; background:rgba(255,255,255,0.02); padding:15px 26px; border-radius:9px; text-decoration:none; border:1px solid rgba(255,255,255,0.16); transition:transform .25s, box-shadow .25s, border-color .25s, color .25s;" style-hover="transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 55%, transparent); color:#ffffff; box-shadow:0 0 26px -10px color-mix(in srgb,var(--accent) 50%, transparent);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">See my work</a>
+      </div>
+      <div style="margin-top:34px;">
+        <a href="#products" style="text-decoration:none; font-family:'JetBrains Mono',monospace; font-size:0.8rem; letter-spacing:0.04em; color:#5C6576; display:inline-flex; align-items:center; gap:9px;" style-hover="color:#9AA3B4;">
+          <span data-anim style="width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent); animation:fgPulse 2.4s ease-in-out infinite;"></span>
+          Currently building <span style="color:color-mix(in srgb,var(--accent) 90%, #ffffff);">VISTO Pilot</span> ↗
+        </a>
+      </div>
+    </div>
+    <a href="#services" aria-label="Scroll to services" style="position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:11px; text-decoration:none;">
+      <span style="font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.32em; text-transform:uppercase; color:#5C6576;">Scroll</span>
+      <span style="position:relative; width:1px; height:40px; background:rgba(255,255,255,0.12); overflow:hidden;">
+        <span data-anim style="position:absolute; top:0; left:0; width:1px; height:12px; background:var(--accent); animation:fgDrop 2.2s ease-in-out infinite;"></span>
+      </span>
+    </a>
+  </section>
+
+  <section id="services" data-screen-label="Services" data-reveal style="position:relative; scroll-margin-top:90px; padding-block:clamp(90px,12vw,150px); padding-inline:clamp(18px,5vw,40px);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <div style="max-width:680px; margin-bottom:clamp(40px,6vw,68px);">
+        <div style="display:flex; align-items:center; gap:11px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">
+          <span style="width:22px; height:1px; background:color-mix(in srgb,var(--accent) 55%, transparent);"></span>
+          01 / Services
+        </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2rem,5vw,3.4rem); line-height:1.02; letter-spacing:-0.025em; margin:0 0 16px; color:#F3F5F9;">Three ways I put AI to work.</h2>
+        <p style="font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.6; color:#9AA3B4; margin:0;">Build, teach, document. Whether you need a system shipped or a team that can ship on its own — this is where I work.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr)); gap:clamp(16px,2vw,24px);">
+
+        <div data-reveal data-delay="0" style="position:relative; padding:30px; border:1px solid rgba(255,255,255,0.08); border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008)); transition:transform .3s, border-color .3s, box-shadow .3s;" style-hover="transform:translateY(-6px); border-color:color-mix(in srgb,var(--accent) 38%, transparent); box-shadow:0 24px 50px -24px rgba(0,0,0,0.6), 0 0 36px -18px color-mix(in srgb,var(--accent) 55%, transparent);">
+          <div style="display:flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; border:1px solid color-mix(in srgb,var(--accent) 22%, transparent); background:color-mix(in srgb,var(--accent) 8%, transparent); margin-bottom:22px;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="7" r="2.3"></circle><circle cx="20" cy="7" r="2.3"></circle><circle cx="13" cy="19" r="2.3"></circle><line x1="8.2" y1="8.2" x2="11.4" y2="16.9"></line><line x1="17.8" y1="8.2" x2="14.6" y2="16.9"></line><line x1="8.3" y1="7" x2="17.7" y2="7"></line></svg>
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.28rem; letter-spacing:-0.01em; margin:0 0 12px; color:#EDEFF4;">AI System Development</h3>
+          <p style="font-size:0.98rem; line-height:1.62; color:#8E97A8; margin:0;">RAG systems, Claude API integrations, and TypeScript-first builds. I design the architecture, write the code, and ship systems that hold up in production.</p>
+        </div>
+
+        <div data-reveal data-delay="90" style="position:relative; padding:30px; border:1px solid rgba(255,255,255,0.08); border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008)); transition:transform .3s, border-color .3s, box-shadow .3s;" style-hover="transform:translateY(-6px); border-color:color-mix(in srgb,var(--accent) 38%, transparent); box-shadow:0 24px 50px -24px rgba(0,0,0,0.6), 0 0 36px -18px color-mix(in srgb,var(--accent) 55%, transparent);">
+          <div style="display:flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; border:1px solid color-mix(in srgb,var(--accent) 22%, transparent); background:color-mix(in srgb,var(--accent) 8%, transparent); margin-bottom:22px;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="var(--accent)" stroke-width="1.4" aria-hidden="true"><circle cx="13" cy="13" r="2.8"></circle><circle cx="13" cy="13" r="8.4" stroke-dasharray="2 3.2"></circle><circle cx="21.2" cy="8.4" r="1.5" fill="var(--accent)" stroke="none"></circle></svg>
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.28rem; letter-spacing:-0.01em; margin:0 0 12px; color:#EDEFF4;">AI Education &amp; Training</h3>
+          <p style="font-size:0.98rem; line-height:1.62; color:#8E97A8; margin:0;">I teach teams and individuals to build with AI for real — hands-on workshops and practical guidance, not slideware. You leave able to ship on your own.</p>
+        </div>
+
+        <div data-reveal data-delay="180" style="position:relative; padding:30px; border:1px solid rgba(255,255,255,0.08); border-radius:14px; background:linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008)); transition:transform .3s, border-color .3s, box-shadow .3s;" style-hover="transform:translateY(-6px); border-color:color-mix(in srgb,var(--accent) 38%, transparent); box-shadow:0 24px 50px -24px rgba(0,0,0,0.6), 0 0 36px -18px color-mix(in srgb,var(--accent) 55%, transparent);">
+          <div style="display:flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; border:1px solid color-mix(in srgb,var(--accent) 22%, transparent); background:color-mix(in srgb,var(--accent) 8%, transparent); margin-bottom:22px;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><rect x="6" y="4" width="14" height="18" rx="2.5"></rect><line x1="9.2" y1="9" x2="16.8" y2="9"></line><line x1="9.2" y1="13" x2="16.8" y2="13"></line><line x1="9.2" y1="17" x2="13" y2="17"></line></svg>
+          </div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.28rem; letter-spacing:-0.01em; margin:0 0 12px; color:#EDEFF4;">AI Content</h3>
+          <p style="font-size:0.98rem; line-height:1.62; color:#8E97A8; margin:0;">Tutorials, breakdowns, and guides for builders working with AI. I document what I build so you can skip the trial and error and ship faster.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" data-screen-label="Stack" data-reveal style="position:relative; scroll-margin-top:90px; padding-block:clamp(90px,12vw,150px); padding-inline:clamp(18px,5vw,40px); border-top:1px solid rgba(255,255,255,0.05);">
+    <div style="max-width:1180px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr)); gap:clamp(36px,5vw,64px); align-items:start;">
+      <div>
+        <div style="display:flex; align-items:center; gap:11px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">
+          <span style="width:22px; height:1px; background:color-mix(in srgb,var(--accent) 55%, transparent);"></span>
+          02 / The stack
+        </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2rem,5vw,3.4rem); line-height:1.02; letter-spacing:-0.025em; margin:0 0 16px; color:#F3F5F9;">How I build.</h2>
+        <p style="font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.6; color:#9AA3B4; margin:0 0 18px;">9+ years shipping production software across banking, fintech, industrial automation, education, and health — currently building regulated banking systems for BNP Paribas Portugal. Type-safe end to end, chosen for reliability over novelty.</p>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; letter-spacing:0.04em; color:#5C6576;">// full-stack · forward-deployed</div>
+      </div>
+      <div style="display:flex; flex-direction:column;">
+        <div data-reveal data-delay="0" style="padding:0 0 18px; border-top:none;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);">Frontend</span>
+            <span style="flex:1; height:1px; background:rgba(255,255,255,0.06);"></span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px;">
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Angular 2&ndash;17</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">React</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Next.js</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">TypeScript</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">RxJS</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">NgRx</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Tailwind CSS</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Storybook</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Web Components</span>
+          </div>
+        </div>
+        <div data-reveal data-delay="70" style="padding:18px 0; border-top:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);">Backend</span>
+            <span style="flex:1; height:1px; background:rgba(255,255,255,0.06);"></span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px;">
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">NestJS</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Node.js</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">REST APIs</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">WebSockets</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">TypeORM</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Redis</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Microservices</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Python</span>
+          </div>
+        </div>
+        <div data-reveal data-delay="140" style="padding:18px 0; border-top:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);">Data</span>
+            <span style="flex:1; height:1px; background:rgba(255,255,255,0.06);"></span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px;">
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">PostgreSQL</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">MySQL</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Firebase</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Supabase</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">pgvector</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">IndexedDB</span>
+          </div>
+        </div>
+        <div data-reveal data-delay="210" style="padding:18px 0; border-top:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);">AI &amp; Automation</span>
+            <span style="flex:1; height:1px; background:rgba(255,255,255,0.06);"></span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px;">
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">LLM APIs</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">RAG</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Embeddings</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Structured outputs</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Document extraction</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Prompt engineering</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Claude Code</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Cursor</span>
+          </div>
+        </div>
+        <div data-reveal data-delay="280" style="padding:18px 0; border-top:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);">Cloud &amp; Quality</span>
+            <span style="flex:1; height:1px; background:rgba(255,255,255,0.06);"></span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px;">
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Azure</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Docker</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Vercel</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">GitHub Actions</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">GitLab CI</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Jenkins</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Jest</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Playwright</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Cypress</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Sentry</span>
+          </div>
+        </div>
+        <div data-reveal data-delay="350" style="padding:18px 0; border-top:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);">Forward-deployed</span>
+            <span style="flex:1; height:1px; background:rgba(255,255,255,0.06);"></span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px;">
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Stakeholder discovery</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Client demos</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Requirement shaping</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Delivery scoping</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Agile / Scrum</span>
+            <span style="display:inline-flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#C7CDD9; padding:8px 13px; border:1px solid rgba(255,255,255,0.1); border-radius:100px; background:rgba(255,255,255,0.02); transition:transform .2s, border-color .2s, box-shadow .2s, color .2s;" style-hover="transform:translateY(-2px); color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); box-shadow:0 0 20px -8px color-mix(in srgb,var(--accent) 55%, transparent);">Mentoring</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="products" data-screen-label="Products" data-reveal style="position:relative; scroll-margin-top:90px; padding-block:clamp(90px,12vw,150px); padding-inline:clamp(18px,5vw,40px); border-top:1px solid rgba(255,255,255,0.05);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <div style="max-width:680px; margin-bottom:clamp(40px,6vw,68px);">
+        <div style="display:flex; align-items:center; gap:11px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">
+          <span style="width:22px; height:1px; background:color-mix(in srgb,var(--accent) 55%, transparent);"></span>
+          03 / Building
+        </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2rem,5vw,3.4rem); line-height:1.02; letter-spacing:-0.025em; margin:0 0 16px; color:#F3F5F9;">What I'm building.</h2>
+        <p style="font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.6; color:#9AA3B4; margin:0;">Products shipping under the Forgutti name — built on the same systems I deliver for clients.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)); gap:clamp(16px,2vw,24px);">
+
+        <div data-reveal data-delay="0" style="position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.1); border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.012)); transition:transform .3s, border-color .3s, box-shadow .3s;" style-hover="transform:translateY(-6px); border-color:color-mix(in srgb,var(--accent) 40%, transparent); box-shadow:0 30px 60px -28px rgba(0,0,0,0.7), 0 0 50px -22px color-mix(in srgb,var(--accent) 50%, transparent);">
+          <div aria-hidden="true" style="position:relative; height:172px; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.07);">
+            <div style="position:absolute; inset:-20px; background:repeating-linear-gradient(135deg, color-mix(in srgb,var(--accent) 18%, transparent) 0 2px, transparent 2px 12px); filter:blur(7px); opacity:0.7;"></div>
+            <div style="position:absolute; inset:0; background:radial-gradient(120% 100% at 30% 20%, color-mix(in srgb,var(--accent) 20%, transparent), transparent 60%);"></div>
+            <div style="position:absolute; inset:0; backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);"></div>
+            <div style="position:absolute; top:16px; left:16px; display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.18em; text-transform:uppercase; color:#0A0C12; background:var(--accent); padding:7px 12px; border-radius:100px; box-shadow:0 0 24px -4px color-mix(in srgb,var(--accent) 70%, transparent);">
+              <span data-anim style="width:6px; height:6px; border-radius:50%; background:#0A0C12; animation:fgPulse 2.2s ease-in-out infinite;"></span> Coming soon
+            </div>
+          </div>
+          <div style="padding:28px;">
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.5rem; letter-spacing:-0.015em; margin:0 0 12px; color:#F3F5F9;">VISTO Pilot</h3>
+            <p style="font-size:0.99rem; line-height:1.62; color:#9AA3B4; margin:0 0 22px;">An AI-powered tool designed to streamline how you navigate and act on the information you work with every day. Built on the systems I ship for clients — refined into something anyone can use. Coming soon.</p>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.76rem; letter-spacing:0.06em; color:#5C6576;">STATUS: <span style="color:color-mix(in srgb,var(--accent) 90%, #ffffff);">in development</span></div>
+          </div>
+        </div>
+
+        <div data-reveal data-delay="120" style="position:relative; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; min-height:100%; padding:32px; border:1px dashed rgba(255,255,255,0.16); border-radius:16px; background:rgba(255,255,255,0.008); transition:border-color .3s, background .3s, transform .3s;" style-hover="transform:translateY(-6px); border-color:color-mix(in srgb,var(--accent) 40%, transparent); background:color-mix(in srgb,var(--accent) 4%, transparent);">
+          <div style="display:flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:12px; border:1px solid rgba(255,255,255,0.14); color:#9AA3B4; font-size:1.4rem; line-height:1; margin-bottom:22px;">+</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.3rem; margin:0 0 10px; color:#C7CDD9;">Next in the pipeline</h3>
+          <p style="font-size:0.97rem; line-height:1.6; color:#828B9C; margin:0 0 24px; max-width:340px;">Something new is always in the works. Follow along to see what ships next under Forgutti.</p>
+          <a href="mailto:forgutti@gmail.com" style="display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:0.82rem; color:var(--accent); text-decoration:none; padding:10px 16px; border:1px solid color-mix(in srgb,var(--accent) 30%, transparent); border-radius:8px; transition:background .25s, transform .25s;" style-hover="background:color-mix(in srgb,var(--accent) 10%, transparent); transform:translateY(-2px);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">Get updates ↗</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="about" data-screen-label="About" data-reveal style="position:relative; scroll-margin-top:90px; padding-block:clamp(90px,12vw,150px); padding-inline:clamp(18px,5vw,40px); border-top:1px solid rgba(255,255,255,0.05);">
+    <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr)); gap:clamp(36px,5vw,64px); align-items:center;">
+      <div data-reveal data-delay="80" style="position:relative; aspect-ratio:1/1; max-width:380px; width:100%; border:1px solid rgba(255,255,255,0.09); border-radius:18px; overflow:hidden; background:linear-gradient(160deg, #0E121A, #0A0C12);">
+        <div style="position:absolute; inset:0; background:radial-gradient(80% 70% at 50% 38%, color-mix(in srgb,var(--accent) 16%, transparent), transparent 60%);"></div>
+        <div style="position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 40px), repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 40px);"></div>
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-56%); width:118px; height:118px; border:1px solid color-mix(in srgb,var(--accent) 45%, transparent); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 50px -10px color-mix(in srgb,var(--accent) 45%, transparent);">
+          <span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:2.6rem; color:var(--accent);">F</span>
+        </div>
+        <span style="position:absolute; top:26%; left:24%; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent);"></span>
+        <span style="position:absolute; top:70%; left:74%; width:5px; height:5px; border-radius:50%; background:color-mix(in srgb,var(--accent) 70%, transparent);"></span>
+        <span style="position:absolute; top:74%; left:30%; width:4px; height:4px; border-radius:50%; background:color-mix(in srgb,var(--accent) 60%, transparent);"></span>
+        <div style="position:absolute; left:0; right:0; bottom:0; padding:15px 18px; display:flex; align-items:center; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.12em; color:#5C6576; border-top:1px solid rgba(255,255,255,0.06); background:rgba(10,12,18,0.45);">
+          <span>FORGUTTI</span><span style="color:color-mix(in srgb,var(--accent) 85%, #ffffff);">AI ENGINEER</span>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex; align-items:center; gap:11px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">
+          <span style="width:22px; height:1px; background:color-mix(in srgb,var(--accent) 55%, transparent);"></span>
+          04 / Who is Forgutti
+        </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(1.9rem,4.5vw,3rem); line-height:1.04; letter-spacing:-0.025em; margin:0 0 20px; color:#F3F5F9;">Practical AI, built by hand.</h2>
+        <p style="font-size:clamp(1rem,1.3vw,1.14rem); line-height:1.65; color:#9AA3B4; margin:0 0 18px;">I'm a builder and educator focused on practical AI. I help teams ship AI-powered systems — from RAG pipelines to Claude-based assistants — and teach the skills to build them independently.</p>
+        <p style="font-size:clamp(1rem,1.3vw,1.14rem); line-height:1.65; color:#9AA3B4; margin:0 0 26px;">No fluff, no buzzwords. Just working software, and the know-how to keep it running.</p>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:0.84rem; letter-spacing:0.06em; color:color-mix(in srgb,var(--accent) 88%, #ffffff);">— Forgutti</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="writing" data-screen-label="Writing" data-reveal style="position:relative; scroll-margin-top:90px; padding-block:clamp(90px,12vw,150px); padding-inline:clamp(18px,5vw,40px); border-top:1px solid rgba(255,255,255,0.05);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <div style="max-width:680px; margin-bottom:clamp(40px,6vw,68px);">
+        <div style="display:flex; align-items:center; gap:11px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:22px;">
+          <span style="width:22px; height:1px; background:color-mix(in srgb,var(--accent) 55%, transparent);"></span>
+          05 / Writing
+        </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(2rem,5vw,3.4rem); line-height:1.02; letter-spacing:-0.025em; margin:0 0 16px; color:#F3F5F9;">I write about what I build.</h2>
+        <p style="font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.6; color:#9AA3B4; margin:0;">AI systems, TypeScript, and building with Claude and OpenAI — documented as I go.</p>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr)); gap:clamp(16px,2vw,24px);">
+
+        <a href="#" data-reveal data-delay="0" style="display:flex; flex-direction:column; text-decoration:none; border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; background:rgba(255,255,255,0.015); transition:transform .3s, border-color .3s, box-shadow .3s;" style-hover="transform:translateY(-6px); border-color:color-mix(in srgb,var(--accent) 35%, transparent); box-shadow:0 24px 50px -26px rgba(0,0,0,0.65), 0 0 34px -18px color-mix(in srgb,var(--accent) 45%, transparent);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">
+          <div style="position:relative; aspect-ratio:16/9; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.07); background:#0C0F16;">
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(135deg, color-mix(in srgb,var(--accent) 10%, transparent) 0 1px, transparent 1px 9px);"></div>
+            <div style="position:absolute; inset:0; background:radial-gradient(90% 80% at 25% 20%, color-mix(in srgb,var(--accent) 14%, transparent), transparent 65%);"></div>
+            <span style="position:absolute; bottom:14px; left:14px; font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.08em; color:#8E97A8;">rag-pipeline.ts</span>
+            <span style="position:absolute; top:14px; right:14px; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); border:1px solid color-mix(in srgb,var(--accent) 30%, transparent); padding:4px 9px; border-radius:100px; background:color-mix(in srgb,var(--accent) 8%, transparent);">Tutorial</span>
+          </div>
+          <div style="padding:22px; display:flex; flex-direction:column; gap:10px; flex:1;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; color:#5C6576;">12 min read</div>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.16rem; line-height:1.25; letter-spacing:-0.01em; margin:0; color:#EDEFF4;">Building a RAG system in TypeScript</h3>
+            <span style="margin-top:auto; font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent); display:inline-flex; align-items:center; gap:7px;">Read ↗</span>
+          </div>
+        </a>
+
+        <a href="#" data-reveal data-delay="90" style="display:flex; flex-direction:column; text-decoration:none; border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; background:rgba(255,255,255,0.015); transition:transform .3s, border-color .3s, box-shadow .3s;" style-hover="transform:translateY(-6px); border-color:color-mix(in srgb,var(--accent) 35%, transparent); box-shadow:0 24px 50px -26px rgba(0,0,0,0.65), 0 0 34px -18px color-mix(in srgb,var(--accent) 45%, transparent);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">
+          <div style="position:relative; aspect-ratio:16/9; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.07); background:#0C0F16;">
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(135deg, color-mix(in srgb,var(--accent) 10%, transparent) 0 1px, transparent 1px 9px);"></div>
+            <div style="position:absolute; inset:0; background:radial-gradient(90% 80% at 75% 25%, color-mix(in srgb,var(--accent) 14%, transparent), transparent 65%);"></div>
+            <span style="position:absolute; bottom:14px; left:14px; font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.08em; color:#8E97A8;">claude.client.ts</span>
+            <span style="position:absolute; top:14px; right:14px; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); border:1px solid color-mix(in srgb,var(--accent) 30%, transparent); padding:4px 9px; border-radius:100px; background:color-mix(in srgb,var(--accent) 8%, transparent);">Guide</span>
+          </div>
+          <div style="padding:22px; display:flex; flex-direction:column; gap:10px; flex:1;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; color:#5C6576;">9 min read</div>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.16rem; line-height:1.25; letter-spacing:-0.01em; margin:0; color:#EDEFF4;">The Claude API: a practical guide</h3>
+            <span style="margin-top:auto; font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent); display:inline-flex; align-items:center; gap:7px;">Read ↗</span>
+          </div>
+        </a>
+
+        <a href="#" data-reveal data-delay="180" style="display:flex; flex-direction:column; text-decoration:none; border:1px solid rgba(255,255,255,0.08); border-radius:14px; overflow:hidden; background:rgba(255,255,255,0.015); transition:transform .3s, border-color .3s, box-shadow .3s;" style-hover="transform:translateY(-6px); border-color:color-mix(in srgb,var(--accent) 35%, transparent); box-shadow:0 24px 50px -26px rgba(0,0,0,0.65), 0 0 34px -18px color-mix(in srgb,var(--accent) 45%, transparent);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">
+          <div style="position:relative; aspect-ratio:16/9; overflow:hidden; border-bottom:1px solid rgba(255,255,255,0.07); background:#0C0F16;">
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(135deg, color-mix(in srgb,var(--accent) 10%, transparent) 0 1px, transparent 1px 9px);"></div>
+            <div style="position:absolute; inset:0; background:radial-gradient(90% 80% at 50% 80%, color-mix(in srgb,var(--accent) 14%, transparent), transparent 65%);"></div>
+            <span style="position:absolute; bottom:14px; left:14px; font-family:'JetBrains Mono',monospace; font-size:0.66rem; letter-spacing:0.08em; color:#8E97A8;">ship-it.md</span>
+            <span style="position:absolute; top:14px; right:14px; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); border:1px solid color-mix(in srgb,var(--accent) 30%, transparent); padding:4px 9px; border-radius:100px; background:color-mix(in srgb,var(--accent) 8%, transparent);">Essay</span>
+          </div>
+          <div style="padding:22px; display:flex; flex-direction:column; gap:10px; flex:1;">
+            <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.06em; color:#5C6576;">7 min read</div>
+            <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.16rem; line-height:1.25; letter-spacing:-0.01em; margin:0; color:#EDEFF4;">Designing AI systems that actually ship</h3>
+            <span style="margin-top:auto; font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent); display:inline-flex; align-items:center; gap:7px;">Read ↗</span>
+          </div>
+        </a>
+
+      </div>
+      <div style="margin-top:clamp(32px,4vw,48px);">
+        <a href="https://www.instagram.com/_forgutti/" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:9px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:0.97rem; color:#EDEFF4; background:rgba(255,255,255,0.02); padding:13px 22px; border-radius:9px; text-decoration:none; border:1px solid rgba(255,255,255,0.16); transition:transform .25s, box-shadow .25s, border-color .25s, color .25s;" style-hover="transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 55%, transparent); color:#ffffff; box-shadow:0 0 26px -10px color-mix(in srgb,var(--accent) 50%, transparent);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">See all content <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" data-screen-label="Contact" data-reveal style="position:relative; scroll-margin-top:90px; padding-block:clamp(90px,12vw,150px); padding-inline:clamp(18px,5vw,40px);">
+    <div style="position:relative; max-width:1080px; margin:0 auto; overflow:hidden; border:1px solid color-mix(in srgb,var(--accent) 22%, transparent); border-radius:22px; background:linear-gradient(160deg, #0E1320, #0A0C12); padding:clamp(44px,7vw,86px) clamp(24px,5vw,64px); text-align:center;">
+      <div aria-hidden="true" style="position:absolute; inset:0; background:radial-gradient(90% 120% at 50% 0%, color-mix(in srgb,var(--accent) 16%, transparent), transparent 55%);"></div>
+      <div style="position:relative; z-index:1; max-width:640px; margin:0 auto;">
+        <div style="display:flex; align-items:center; justify-content:center; gap:11px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:24px;">
+          <span style="width:22px; height:1px; background:color-mix(in srgb,var(--accent) 55%, transparent);"></span>
+          06 / Let's build
+          <span style="width:22px; height:1px; background:color-mix(in srgb,var(--accent) 55%, transparent);"></span>
+        </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(2.2rem,5.5vw,3.8rem); line-height:1.0; letter-spacing:-0.03em; margin:0 0 18px; color:#F3F5F9;">Ready to build with AI?</h2>
+        <p style="font-size:clamp(1.02rem,1.4vw,1.2rem); line-height:1.6; color:#9AA3B4; margin:0 auto 36px; max-width:520px;">Whether you need a custom AI system built or want to upskill your team — let's talk.</p>
+        <a href="mailto:forgutti@gmail.com" style="display:inline-flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.05rem; color:#0A0C12; background:var(--accent); padding:16px 30px; border-radius:10px; text-decoration:none; border:1px solid transparent; transition:transform .25s, box-shadow .25s, filter .25s;" style-hover="transform:translateY(-2px); box-shadow:0 18px 40px -12px color-mix(in srgb,var(--accent) 70%, transparent), 0 0 36px -6px color-mix(in srgb,var(--accent) 60%, transparent); filter:brightness(1.06);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">Get in touch <span aria-hidden="true">↗</span></a>
+        <div style="margin-top:22px; font-family:'JetBrains Mono',monospace; font-size:0.84rem; letter-spacing:0.04em; color:#828B9C;">forgutti@gmail.com</div>
+        <div style="margin-top:30px; padding-top:26px; border-top:1px solid rgba(255,255,255,0.08); display:flex; flex-direction:column; align-items:center; gap:14px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; letter-spacing:0.16em; text-transform:uppercase; color:#5C6576;">Or join the community</div>
+          <a href="https://t.me/+EWyPkSQU3cg0MzQ0" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:0.97rem; color:#EDEFF4; background:rgba(255,255,255,0.02); padding:13px 22px; border-radius:10px; text-decoration:none; border:1px solid rgba(255,255,255,0.16); transition:transform .25s, box-shadow .25s, border-color .25s, color .25s;" style-hover="transform:translateY(-2px); border-color:color-mix(in srgb,var(--accent) 55%, transparent); color:#ffffff; box-shadow:0 0 26px -10px color-mix(in srgb,var(--accent) 55%, transparent);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--accent)" aria-hidden="true"><path d="M21.94 4.66a1.2 1.2 0 0 0-1.27-.2L3.4 11.2c-.86.35-.83 1.6.05 1.9l4.3 1.43 1.63 5.02a.9.9 0 0 0 1.5.37l2.4-2.32 4.48 3.3a1.2 1.2 0 0 0 1.88-.74l3.2-14.8a1.2 1.2 0 0 0-.4-1.7ZM9.7 14.1l8.2-5.43-6.7 6.06a1 1 0 0 0-.32.6l-.27 1.96-.91-3.19Z"/></svg>
+            Forgutti on Telegram <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(255,255,255,0.07); padding:clamp(48px,7vw,72px) clamp(18px,5vw,40px) 40px;">
+    <div style="max-width:1180px; margin:0 auto;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr)); gap:36px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,0.06);">
+        <div style="max-width:320px;">
+          <div style="display:flex; align-items:center; gap:11px;">
+            <span style="display:grid; grid-template-columns:repeat(2,4px); grid-template-rows:repeat(2,4px); gap:3px;">
+              <span style="width:4px; height:4px; border-radius:50%; background:var(--accent);"></span>
+              <span style="width:4px; height:4px; border-radius:50%; background:color-mix(in srgb,var(--accent) 50%, transparent);"></span>
+              <span style="width:4px; height:4px; border-radius:50%; background:color-mix(in srgb,var(--accent) 50%, transparent);"></span>
+              <span style="width:4px; height:4px; border-radius:50%; background:var(--accent);"></span>
+            </span>
+            <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.05rem; letter-spacing:-0.01em; color:#EDEFF4;">Forgutti</span>
+          </div>
+          <p style="margin:16px 0 0; font-size:0.92rem; line-height:1.6; color:#828B9C;">AI systems, built right. Custom builds, practical training, and writing for people who ship.</p>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#5C6576; margin-bottom:18px;">Navigate</div>
+          <div style="display:flex; flex-direction:column; gap:11px;">
+            <a href="#services" style="font-family:'Space Grotesk',sans-serif; font-size:0.92rem; color:#9AA3B4; text-decoration:none; transition:color .2s; width:fit-content;" style-hover="color:var(--accent);">Services</a>
+            <a href="#stack" style="font-family:'Space Grotesk',sans-serif; font-size:0.92rem; color:#9AA3B4; text-decoration:none; transition:color .2s; width:fit-content;" style-hover="color:var(--accent);">Stack</a>
+            <a href="#products" style="font-family:'Space Grotesk',sans-serif; font-size:0.92rem; color:#9AA3B4; text-decoration:none; transition:color .2s; width:fit-content;" style-hover="color:var(--accent);">Products</a>
+            <a href="#writing" style="font-family:'Space Grotesk',sans-serif; font-size:0.92rem; color:#9AA3B4; text-decoration:none; transition:color .2s; width:fit-content;" style-hover="color:var(--accent);">Writing</a>
+            <a href="mailto:forgutti@gmail.com" style="font-family:'Space Grotesk',sans-serif; font-size:0.92rem; color:#9AA3B4; text-decoration:none; transition:color .2s; width:fit-content;" style-hover="color:var(--accent);">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.18em; text-transform:uppercase; color:#5C6576; margin-bottom:18px;">Elsewhere</div>
+          <div style="display:flex; flex-direction:column; gap:11px; align-items:flex-start;">
+            <a href="https://www.tiktok.com/@forgutti" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#9AA3B4; text-decoration:none; padding:9px 14px; border:1px solid rgba(255,255,255,0.1); border-radius:8px; transition:color .25s, border-color .25s, transform .25s;" style-hover="color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); transform:translateY(-2px);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">TikTok <span aria-hidden="true">↗</span></a>
+            <a href="https://github.com/ereyomi" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#9AA3B4; text-decoration:none; padding:9px 14px; border:1px solid rgba(255,255,255,0.1); border-radius:8px; transition:color .25s, border-color .25s, transform .25s;" style-hover="color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); transform:translateY(-2px);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">GitHub <span aria-hidden="true">↗</span></a>
+            <a href="https://www.linkedin.com/in/ereyomi" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#9AA3B4; text-decoration:none; padding:9px 14px; border:1px solid rgba(255,255,255,0.1); border-radius:8px; transition:color .25s, border-color .25s, transform .25s;" style-hover="color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); transform:translateY(-2px);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">LinkedIn <span aria-hidden="true">↗</span></a>
+            <a href="https://t.me/+EWyPkSQU3cg0MzQ0" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#9AA3B4; text-decoration:none; padding:9px 14px; border:1px solid rgba(255,255,255,0.1); border-radius:8px; transition:color .25s, border-color .25s, transform .25s;" style-hover="color:#ffffff; border-color:color-mix(in srgb,var(--accent) 45%, transparent); transform:translateY(-2px);" style-focus="outline:2px solid var(--accent); outline-offset:3px;">Telegram <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:space-between; align-items:center; padding-top:24px; font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#5C6576;">
+        <span>© 2026 Forgutti. Built with AI.</span>
+        <a href="#top" style="color:#5C6576; text-decoration:none; transition:color .2s;" style-hover="color:var(--accent);">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#4F8EF7&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#4F8EF7&quot;, &quot;#3DFFD0&quot;, &quot;#8B7CF7&quot;], &quot;section&quot;: &quot;Theme&quot; },
+  &quot;ambient&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;nodes&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;nodes&quot;, &quot;grid&quot;, &quot;off&quot;], &quot;section&quot;: &quot;Theme&quot; },
+  &quot;nodeDensity&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 48, &quot;min&quot;: 18, &quot;max&quot;: 90, &quot;step&quot;: 2, &quot;unit&quot;: &quot;nodes&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Theme&quot; }
+}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.rootRef = React.createRef();
+    this.canvasRef = React.createRef();
+    this.navRef = React.createRef();
+    this.progressRef = React.createRef();
+    this._raf = null;
+  }
+  renderVals(){
+    return {
+      rootRef: this.rootRef,
+      canvasRef: this.canvasRef,
+      navRef: this.navRef,
+      progressRef: this.progressRef
+    };
+  }
+  componentDidMount(){
+    this.reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    const root = this.rootRef.current;
+    if(root && this.props.accent) root.style.setProperty('--accent', this.props.accent);
+    if(!this.reduced && document.documentElement) document.documentElement.style.scrollBehavior = 'smooth';
+    if(this.reduced && root){
+      const anim = root.querySelectorAll('[data-anim]');
+      for(let i=0;i<anim.length;i++){ anim[i].style.animation = 'none'; }
+    }
+    this._onScroll = this.onScroll.bind(this);
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this.onScroll();
+    this.setupReveal();
+    this.setupCanvas();
+  }
+  componentDidUpdate(prev){
+    const root = this.rootRef.current;
+    if(prev.accent !== this.props.accent && root){
+      root.style.setProperty('--accent', this.props.accent || '#4F8EF7');
+      this.teardownCanvas();
+      this.setupCanvas();
+    }
+    if(prev.ambient !== this.props.ambient || prev.nodeDensity !== this.props.nodeDensity){
+      this.teardownCanvas();
+      this.setupCanvas();
+    }
+  }
+  componentWillUnmount(){
+    window.removeEventListener('scroll', this._onScroll);
+    this.teardownCanvas();
+    if(this._revealObs) this._revealObs.disconnect();
+  }
+  onScroll(){
+    const y = window.scrollY || window.pageYOffset || 0;
+    const nav = this.navRef.current;
+    if(nav){
+      if(y > 20){
+        nav.style.background = 'rgba(9,11,17,0.72)';
+        nav.style.borderBottomColor = 'rgba(255,255,255,0.07)';
+        nav.style.backdropFilter = 'saturate(150%) blur(14px)';
+        nav.style.webkitBackdropFilter = 'saturate(150%) blur(14px)';
+      } else {
+        nav.style.background = 'transparent';
+        nav.style.borderBottomColor = 'transparent';
+        nav.style.backdropFilter = 'none';
+        nav.style.webkitBackdropFilter = 'none';
+      }
+    }
+    const p = this.progressRef.current;
+    if(p){
+      const doc = document.documentElement;
+      const max = (doc.scrollHeight - doc.clientHeight) || 1;
+      p.style.width = Math.max(0, Math.min(100, (y / max) * 100)) + '%';
+    }
+  }
+  setupReveal(){
+    const root = this.rootRef.current;
+    if(!root) return;
+    const els = Array.prototype.slice.call(root.querySelectorAll('[data-reveal]'));
+    if(this.reduced || !('IntersectionObserver' in window)){
+      for(let i=0;i<els.length;i++){ els[i].style.opacity = '1'; els[i].style.transform = 'none'; }
+      return;
+    }
+    for(let i=0;i<els.length;i++){
+      const el = els[i];
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(22px)';
+      el.style.transition = 'opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1)';
+      const d = el.getAttribute('data-delay');
+      if(d) el.style.transitionDelay = d + 'ms';
+    }
+    const obs = new IntersectionObserver(function(entries){
+      for(let i=0;i<entries.length;i++){
+        const e = entries[i];
+        if(e.isIntersecting){
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          obs.unobserve(e.target);
+        }
+      }
+    }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+    for(let i=0;i<els.length;i++){ obs.observe(els[i]); }
+    this._revealObs = obs;
+  }
+  hexToRgb(hex){
+    hex = (hex || '#4F8EF7').replace('#','');
+    if(hex.length === 3) hex = hex.split('').map(function(c){ return c + c; }).join('');
+    const n = parseInt(hex, 16);
+    return [ (n >> 16) & 255, (n >> 8) & 255, n & 255 ];
+  }
+  setupCanvas(){
+    const canvas = this.canvasRef.current;
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    const mode = this.props.ambient || 'nodes';
+    const rgb = this.hexToRgb(this.props.accent || '#4F8EF7');
+    const r = rgb[0], g = rgb[1], b = rgb[2];
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const self = this;
+    let w = 1, h = 1;
+    const resize = function(){
+      const rect = canvas.getBoundingClientRect();
+      w = Math.max(1, rect.width);
+      h = Math.max(1, rect.height);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    this._cvResize = resize;
+    window.addEventListener('resize', resize);
+
+    if(mode === 'off'){ ctx.clearRect(0, 0, w, h); return; }
+
+    if(mode === 'grid'){
+      const drawGrid = function(){
+        ctx.clearRect(0, 0, w, h);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.06)';
+        const gap = Math.max(46, Math.min(86, w / 16));
+        for(let x = 0; x <= w; x += gap){ ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+        for(let y = 0; y <= h; y += gap){ ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+      };
+      drawGrid();
+      this._cvGrid = drawGrid;
+      window.addEventListener('resize', drawGrid);
+      return;
+    }
+
+    const density = Math.max(18, Math.min(90, this.props.nodeDensity || 48));
+    const count = Math.round(Math.min(density, Math.max(16, (w * h) / 24000)));
+    const nodes = [];
+    for(let i = 0; i < count; i++){
+      nodes.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.16, vy: (Math.random() - 0.5) * 0.16 });
+    }
+    const D = Math.max(110, Math.min(200, Math.sqrt(w * w + h * h) / 9));
+    const draw = function(){
+      ctx.clearRect(0, 0, w, h);
+      for(let i = 0; i < nodes.length; i++){
+        const a = nodes[i];
+        for(let j = i + 1; j < nodes.length; j++){
+          const bn = nodes[j];
+          const dx = a.x - bn.x, dy = a.y - bn.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if(dist < D){
+            const al = (1 - dist / D) * 0.2;
+            ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + al + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(bn.x, bn.y);
+            ctx.stroke();
+          }
+        }
+      }
+      ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',0.5)';
+      for(let k = 0; k < nodes.length; k++){
+        const a = nodes[k];
+        ctx.beginPath();
+        ctx.arc(a.x, a.y, 1.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    };
+    draw();
+    if(this.reduced) return;
+    const step = function(){
+      for(let i = 0; i < nodes.length; i++){
+        const a = nodes[i];
+        a.x += a.vx; a.y += a.vy;
+        if(a.x < -24) a.x = w + 24;
+        if(a.x > w + 24) a.x = -24;
+        if(a.y < -24) a.y = h + 24;
+        if(a.y > h + 24) a.y = -24;
+      }
+      draw();
+      self._raf = requestAnimationFrame(step);
+    };
+    self._raf = requestAnimationFrame(step);
+  }
+  teardownCanvas(){
+    if(this._raf){ cancelAnimationFrame(this._raf); this._raf = null; }
+    if(this._cvResize){ window.removeEventListener('resize', this._cvResize); this._cvResize = null; }
+    if(this._cvGrid){ window.removeEventListener('resize', this._cvGrid); this._cvGrid = null; }
+  }
+}
+</script>
+</body>
+</html>
