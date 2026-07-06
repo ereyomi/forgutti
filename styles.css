@@ -69,7 +69,6 @@ img, svg, canvas { display: block; }
   box-shadow: 0 0 10px var(--accent);
   animation: fgPulse 2.4s ease-in-out infinite;
 }
-.dot--dark { background: #0A0C12; box-shadow: none; }
 
 .wrap { max-width: 1100px; margin: 0 auto; width: 100%; }
 .wrap--wide { max-width: 1180px; }
@@ -248,6 +247,7 @@ img, svg, canvas { display: block; }
   font-size: clamp(1.02rem, 1.4vw, 1.2rem); line-height: 1.6; color: var(--t-muted);
 }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.hero__email { margin-top: 18px; font-family: var(--font-mono); font-size: 0.84rem; letter-spacing: 0.04em; color: var(--t-soft); }
 .hero__now { margin-top: 34px; }
 .now-link {
   text-decoration: none; font-family: var(--font-mono);
@@ -294,6 +294,10 @@ img, svg, canvas { display: block; }
   letter-spacing: -0.01em; margin: 0 0 12px; color: var(--t-base);
 }
 .svc-card__body { font-size: 0.98rem; line-height: 1.62; color: var(--t-body); margin: 0; }
+.svc-card__price {
+  margin-top: 14px; font-family: var(--font-mono); font-size: 0.76rem;
+  letter-spacing: 0.06em; color: var(--t-faint);
+}
 
 /* Stack -------------------------------------------------------------------- */
 .stack {
@@ -336,30 +340,19 @@ img, svg, canvas { display: block; }
               0 0 50px -22px color-mix(in srgb, var(--accent) 50%, transparent);
 }
 .product-card__banner { position: relative; height: 172px; overflow: hidden; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.product-card__banner--visto { display: flex; align-items: center; justify-content: center; }
+.product-card__logo { position: relative; z-index: 1; width: 72px; height: 72px; }
 .product-card__hatch {
   position: absolute; inset: -20px;
   background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--accent) 18%, transparent) 0 2px, transparent 2px 12px);
   filter: blur(7px); opacity: 0.7;
 }
 .product-card__radial { position: absolute; inset: 0; background: radial-gradient(120% 100% at 30% 20%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%); }
-.product-card__blur { position: absolute; inset: 0; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
 .product-card__body { padding: 28px; }
 .product-card__title { font-family: var(--font-sans); font-weight: 600; font-size: 1.5rem; letter-spacing: -0.015em; margin: 0 0 12px; color: var(--t-hi); }
 .product-card__text { font-size: 0.99rem; line-height: 1.62; color: var(--t-muted); margin: 0 0 22px; }
-.product-card__status { font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.06em; color: var(--t-faint); }
-
-.tag {
-  position: absolute; top: 16px; left: 16px;
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: 0.66rem;
-  letter-spacing: 0.18em; text-transform: uppercase;
-}
-.tag--accent {
-  color: #0A0C12; background: var(--accent);
-  padding: 7px 12px; border-radius: 100px;
-  box-shadow: 0 0 24px -4px color-mix(in srgb, var(--accent) 70%, transparent);
-}
-.tag .dot { width: 6px; height: 6px; animation-duration: 2.2s; }
+.product-card__pricing { font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.06em; color: var(--t-faint); }
+.product-card__body .btn { margin-top: 18px; }
 
 .pipeline-card {
   position: relative; display: flex; flex-direction: column;
@@ -495,6 +488,21 @@ img, svg, canvas { display: block; }
 }
 .footer__toplink { color: var(--t-faint); text-decoration: none; transition: color .2s; }
 .footer__toplink:hover { color: var(--accent); }
+.footer__legal-entity {
+  margin-top: 12px; font-family: var(--font-mono); font-size: 0.7rem;
+  letter-spacing: 0.02em; line-height: 1.5; color: var(--t-faint);
+}
+
+/* Legal / long-form content -------------------------------------------------- */
+.legal { max-width: 760px; margin: 0 auto; }
+.legal__updated { font-family: var(--font-mono); font-size: 0.78rem; color: var(--t-faint); margin: 0 0 8px; }
+.legal h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem; color: var(--t-hi); margin: 40px 0 14px; }
+.legal h3:first-of-type { margin-top: 8px; }
+.legal p { font-size: 0.98rem; line-height: 1.7; color: var(--t-body); margin: 0 0 16px; }
+.legal ul { margin: 0 0 16px; padding-left: 22px; color: var(--t-body); }
+.legal li { font-size: 0.98rem; line-height: 1.7; margin-bottom: 8px; }
+.legal a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+.legal strong { color: var(--t-hi); }
 
 /* Reveal-on-scroll --------------------------------------------------------- */
 [data-reveal] { will-change: opacity, transform; }
