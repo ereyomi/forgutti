@@ -354,7 +354,7 @@ img, svg, canvas { display: block; }
               0 0 50px -22px color-mix(in srgb, var(--accent) 50%, transparent);
 }
 .product-card__banner { position: relative; height: 172px; overflow: hidden; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
-.product-card__banner--visto { display: flex; align-items: center; justify-content: center; }
+.product-card__banner--logo { display: flex; align-items: center; justify-content: center; }
 .product-card__logo { position: relative; z-index: 1; width: 72px; height: 72px; }
 .product-card__hatch {
   position: absolute; inset: -20px;
@@ -384,6 +384,7 @@ img, svg, canvas { display: block; }
   font-size: 0.48em; letter-spacing: 0.02em; color: var(--t-faint); margin-left: 3px;
 }
 .product-card__price-caption { font-size: 0.86rem; color: var(--t-soft); }
+.product-card__status-value { font-family: var(--font-sans); font-weight: 600; font-size: 1.15rem; }
 .product-card__body .btn { margin-top: 18px; }
 
 .pipeline-card {

@@ -1,0 +1,8 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="NHS Job Application Support">
+  <rect width="64" height="64" rx="14" fill="#251b32"/>
+  <path d="M17 30.5 L26.5 40 L47 19.5" stroke="#9f3231" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <g stroke="#fcfaf6" stroke-width="3.5" stroke-linecap="round" opacity="0.42">
+    <path d="M17 48 H47"/>
+    <path d="M17 55.5 H35"/>
+  </g>
+</svg>
