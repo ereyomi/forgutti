@@ -1,56 +1,108 @@
 # Forgutti — AI Agency Site
 
-A single-page marketing site for **Forgutti** (AI systems, education & content).
-Implemented as a framework-free static site, ported 1:1 from the Claude Design
-prototype in [`design/Forgutti.dc.html`](design/Forgutti.dc.html).
+A single-page marketing site for **Forgutti** (AI systems, education & content),
+built with **Next.js** (App Router) and ported 1:1 from the original static site
+(kept in [`legacy/`](legacy/) for reference).
 
 ## Stack
 
-Plain HTML + CSS + vanilla JS — no build step, no dependencies. Fonts load from
-Google Fonts (Space Grotesk + JetBrains Mono).
+- **Next.js 16** (App Router, Turbopack) + **React 19** + **TypeScript**
+- The original hand-written CSS, unchanged (`app/globals.css`) — fonts load from
+  Google Fonts (Space Grotesk + JetBrains Mono)
+- **PostgreSQL** (`pg`) for storing captured leads behind `POST /api/leads`
 
 ```
-index.html      Markup for every section
-styles.css      Design tokens + all component styles
-script.js       Behavior: nav blur-on-scroll, scroll-progress bar,
-                reveal-on-scroll, and the hero node-network canvas
-design/         Original Claude Design handoff bundle (reference only)
+app/
+  layout.tsx            Root layout: nav, scroll progress, reveal-on-scroll,
+                        footer, and the email-gate provider
+  page.tsx              Home page (assembles the sections)
+  globals.css           Design tokens + all component styles (+ gate modal)
+  terms/                Terms of Service
+  privacy/              Privacy Policy
+  refund-policy/        Refund & Cancellation Policy
+  api/leads/route.ts    POST endpoint that stores captured emails
+components/
+  EmailGateProvider.tsx Email-capture modal + gate logic (localStorage memory)
+  GatedLink.tsx         <a> that collects an email before navigating
+  HeroCanvas.tsx        Ambient node-network canvas
+  SiteNav / ScrollProgress / RevealController  Ports of the legacy script.js
+  sections/             Hero, Services, Stack, Products, About, Writing, Contact
+lib/db.ts               Postgres pool + lazy `leads` table setup
+public/assets/          Product logo SVGs
+legacy/                 The original static site (HTML/CSS/JS) — reference only
 ```
 
 ## Run it
 
-No tooling required — open `index.html` directly, or serve the folder:
-
 ```bash
-python3 -m http.server 8000
-# then visit http://localhost:8000
+npm install
+cp .env.local.example .env.local   # then set DATABASE_URL
+npm run dev                        # http://localhost:3000
 ```
 
-## Sections
+Production:
 
-Hero · Services · Stack · Products · About · Writing · Contact · Footer —
-all reveal on scroll, with a live particle-network canvas behind the hero.
+```bash
+npm run build && npm start
+```
+
+## Email capture
+
+Visitors are asked for their email **once per browser** (remembered via a
+localStorage flag) before any of these actions:
+
+| Action | Where | `source` value |
+| --- | --- | --- |
+| See my work | Hero button | `hero-products` |
+| Try VistoPilot free / View preview | Products section | `product` |
+| Get updates | "Next in the pipeline" card | `updates` |
+| Join my community | Contact section + footer | `community` |
+
+Submissions are POSTed to `/api/leads` and stored in Postgres:
+
+```sql
+CREATE TABLE leads (
+  id          BIGSERIAL PRIMARY KEY,
+  email       TEXT NOT NULL,
+  source      TEXT NOT NULL,   -- community | product | updates | hero-products
+  label       TEXT,            -- e.g. "vistopilot"
+  target      TEXT,            -- URL the visitor was heading to
+  page        TEXT,            -- page they submitted from
+  user_agent  TEXT,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (email, source)       -- via unique index; resubmits are ignored
+);
+```
+
+The table is created automatically on first insert. A honeypot field silently
+discards bot submissions. If `DATABASE_URL` is not set, leads are logged to the
+server console instead and the visitor is still let through (dev convenience).
+
+### Environment
+
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `DATABASE_URL` | yes (prod) | Postgres connection string (Supabase/Neon/RDS/…) |
+| `DATABASE_SSL` | no | set to `false` for local Postgres without SSL |
 
 ## Theming
 
-The design's "Tweaks" are baked in as tokens/constants:
-
-- **Accent** — `--accent` in `styles.css` (`:root`). Default `#4F8EF7`;
-  the design also ships `#3DFFD0` (teal) and `#8B7CF7` (purple). Changing this
-  one variable re-themes the whole site, including the hero canvas.
+- **Accent** — `--accent` in `app/globals.css` (`:root`). Default `#4F8EF7`;
+  alternatives `#3DFFD0` (teal) and `#8B7CF7` (purple). Re-themes the whole
+  site, including the hero canvas.
 - **Ambient / node density** — `AMBIENT` and `NODE_DENSITY` at the top of
-  `script.js` (`'nodes'` | `'grid'` | `'off'`, and `18`–`90`).
+  `components/HeroCanvas.tsx`.
 
 ## Accessibility & motion
 
-Respects `prefers-reduced-motion`: the canvas renders a static frame and all
-reveal/pulse animations are disabled. Interactive elements have visible
-`:focus-visible` outlines. Reveal states are applied via JS, so content stays
-visible if JavaScript is unavailable.
+Respects `prefers-reduced-motion`: the canvas renders a static frame and
+reveal/pulse animations are disabled. The email gate is a proper dialog
+(`role="dialog"`, Escape to close, backdrop click to close, autofocus).
+Interactive elements have visible `:focus-visible` outlines.
 
 ## Notes
 
-Content (copy, links, tech stack, social handles) is transcribed from the latest
-design source. The PNGs in `design/screenshots/` are earlier reference captures
-and may differ slightly from the current copy — `design/Forgutti.dc.html` is the
-source of truth.
+The legal pages are **drafts** with bracketed placeholders (e.g. `[DATA
+RETENTION]`) — have them reviewed by a lawyer before relying on them. The
+privacy policy has been updated to describe the new email capture and the
+localStorage flag.
