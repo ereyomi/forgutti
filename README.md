@@ -54,7 +54,7 @@ localStorage flag) before any of these actions:
 | Action | Where | `source` value |
 | --- | --- | --- |
 | See my work | Hero button | `hero-products` |
-| Try VistoPilot free / View preview | Products section | `product` |
+| Try VistoPilot free / Try Vessero free / View preview | Products section | `product` |
 | Get updates | "Next in the pipeline" card | `updates` |
 | Join my community | Contact section + footer | `community` |
 

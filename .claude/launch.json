@@ -2,6 +2,13 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "forgutti-next",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
       "name": "forgutti",
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8130", "--bind", "127.0.0.1"],

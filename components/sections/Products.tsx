@@ -2,11 +2,11 @@ import GatedLink from "@/components/GatedLink";
 
 export default function Products() {
   return (
-    <section id="products" className="section section--bordered" data-reveal>
+    <section id="products" className="section" data-reveal>
       <div className="wrap wrap--wide">
         <div className="section__head">
           <div className="eyebrow">
-            <span className="eyebrow__line"></span>03 / Building
+            <span className="eyebrow__line"></span>01 / Building
           </div>
           <h2 className="h2">What I&apos;m building.</h2>
           <p className="lead">
@@ -16,6 +16,44 @@ export default function Products() {
         </div>
         <div className="grid grid--products">
           <article className="product-card" data-reveal data-delay="0">
+            <div className="product-card__banner product-card__banner--logo" aria-hidden="true">
+              <div className="product-card__hatch"></div>
+              <div className="product-card__radial"></div>
+              <img className="product-card__logo" src="/assets/vessero-mark.svg" alt="" />
+            </div>
+            <div className="product-card__body">
+              <h3 className="product-card__title">Vessero</h3>
+              <p className="product-card__text">
+                An AI creative studio — image, video, sound and motion from the best models, finished
+                on one canvas with captions, branding and variations, and priced before every run.
+              </p>
+              <div className="product-card__pricing">
+                <span className="product-card__price-label">Plans from</span>
+                <span className="product-card__price-figure">
+                  $15<span className="product-card__price-unit">/mo</span>
+                </span>
+                <span className="product-card__price-caption">Free to explore — pay only when you run</span>
+              </div>
+              <GatedLink
+                href="https://vessero.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--accent-outline"
+                gate={{
+                  source: "product",
+                  label: "vessero",
+                  title: "Try Vessero free",
+                  body: "Enter your email to continue to Vessero — the AI creative studio for image, video, sound and motion.",
+                  cta: "Continue to Vessero ↗",
+                  done: "Your email is saved — Vessero is opening now.",
+                }}
+              >
+                Try Vessero free ↗
+              </GatedLink>
+            </div>
+          </article>
+
+          <article className="product-card" data-reveal data-delay="90">
             <div className="product-card__banner product-card__banner--logo" aria-hidden="true">
               <div className="product-card__hatch"></div>
               <div className="product-card__radial"></div>
@@ -50,41 +88,6 @@ export default function Products() {
                 }}
               >
                 Try VistoPilot free ↗
-              </GatedLink>
-            </div>
-          </article>
-
-          <article className="product-card" data-reveal data-delay="90">
-            <div className="product-card__banner product-card__banner--logo" aria-hidden="true">
-              <div className="product-card__hatch"></div>
-              <div className="product-card__radial"></div>
-              <img className="product-card__logo" src="/assets/nhs-job-portal-mark.svg" alt="" />
-            </div>
-            <div className="product-card__body">
-              <h3 className="product-card__title">NHS Job Application Support template</h3>
-              <p className="product-card__text">
-                AI tools and expert human review that turn the NHS person specification into a
-                shortlisting-ready supporting statement, CV, and interview plan.
-              </p>
-              <div className="product-card__pricing">
-                <span className="product-card__price-label">Status</span>
-                <span className="product-card__status-value accent-soft">In development</span>
-              </div>
-              <GatedLink
-                href="https://nhs-job-portal-template.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn--accent-outline"
-                gate={{
-                  source: "product",
-                  label: "nhs-job-application-support",
-                  title: "View the NHS template",
-                  body: "Enter your email to open the preview of the NHS Job Application Support template.",
-                  cta: "View preview ↗",
-                  done: "Your email is saved — the preview is opening now.",
-                }}
-              >
-                View preview ↗
               </GatedLink>
             </div>
           </article>

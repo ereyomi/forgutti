@@ -1,10 +1,10 @@
 export default function Services() {
   return (
-    <section id="services" className="section" data-reveal>
+    <section id="services" className="section section--bordered" data-reveal>
       <div className="wrap wrap--wide">
         <div className="section__head">
           <div className="eyebrow">
-            <span className="eyebrow__line"></span>01 / Services
+            <span className="eyebrow__line"></span>02 / Services
           </div>
           <h2 className="h2">Three ways I put AI to work.</h2>
           <p className="lead">

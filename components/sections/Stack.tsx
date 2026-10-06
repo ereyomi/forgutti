@@ -75,7 +75,7 @@ export default function Stack() {
       <div className="wrap wrap--wide stack">
         <div className="stack__intro">
           <div className="eyebrow">
-            <span className="eyebrow__line"></span>02 / The stack
+            <span className="eyebrow__line"></span>03 / The stack
           </div>
           <h2 className="h2">How I build.</h2>
           <p className="lead lead--tight">

@@ -48,7 +48,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <a href="#services" className="scroll-cue" aria-label="Scroll to services">
+      <a href="#products" className="scroll-cue" aria-label="Scroll to products">
         <span className="scroll-cue__label">Scroll</span>
         <span className="scroll-cue__rail">
           <span className="scroll-cue__drop" data-anim></span>

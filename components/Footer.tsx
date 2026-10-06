@@ -36,9 +36,9 @@ export default function Footer() {
           <div className="footer__col">
             <div className="footer__heading">Navigate</div>
             <div className="footer__links">
+              <a href={anchor("products")} className="footer-link">Products</a>
               <a href={anchor("services")} className="footer-link">Services</a>
               <a href={anchor("stack")} className="footer-link">Stack</a>
-              <a href={anchor("products")} className="footer-link">Products</a>
               <a href={anchor("writing")} className="footer-link">Writing</a>
               <a href="mailto:forgutti@gmail.com" className="footer-link">Contact</a>
             </div>
